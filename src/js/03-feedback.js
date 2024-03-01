@@ -1,38 +1,51 @@
 import throttle from 'lodash.throttle';
 
-const feedbackForm = document.querySelector(".feedback-form");
-const email = document.querySelector("input");
-const message = document.querySelector("textarea");
+const form = document.querySelector('form.feedback-form');
+const emailEl = document.querySelector('label [name="email"]');
+const messageEl = document.querySelector('label [name="message"]');
 
-const localSetter = () => {
-    const fd = new FormData(feedbackForm);
-    const obj = Object.fromEntries(fd);
+const STORAGE_KEY = 'feedback-form-state';
 
-    localStorage.setItem("feedback-form-state", JSON.stringify(obj));
+form.addEventListener('input', throttle(onFormInput, 500));
+
+function onFormInput() {
+  const email = emailEl.value;
+  const message = messageEl.value;
+
+  const formData = {
+    email,
+    message,
+  };
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
-const formData = (e) => {
-    e.preventDefault();
-    const { email, message} = e.target;
-    const fd = new FormData(feedbackForm);
-    const obj = Object.fromEntries(fd);
+onPageReload();
 
-    if (email.value !== "" && message.value !== "") {
-        localStorage.removeItem("feedback-form-state");
-        feedbackForm.reset();
-        console.log(obj);
-    } else {
-        alert("Fill up the fields first!");
-    }
-    
+function onPageReload() {
+  const savedMessage = JSON.parse(localStorage.getItem(STORAGE_KEY)); // "{email, message}"
+  if (savedMessage) {
+    emailEl.value = savedMessage.email;
+    messageEl.value = savedMessage.message;
+  }
 }
 
-feedbackForm.addEventListener("input", throttle(localSetter, 500));
-feedbackForm.addEventListener("submit", formData);
+form.addEventListener('submit', onFormSubmit);
 
-let localData = JSON.parse(localStorage.getItem("feedback-form-state"));
+function onFormSubmit(e) {
+  e.preventDefault(); //Prevent reloading the page on form submit
+  const email = emailEl.value;
+  const message = messageEl.value;
 
-if (localData !== null) {
-    email.value = localData.email;
-    message.value = localData.message;
-} 
+  if (email == '' || message == '') {
+    alert('Enter both input parameters!');
+    form.reset();
+    return;
+  }
+
+  const formData = { email, message };
+  console.log(formData);
+  form.reset();
+
+  localStorage.removeItem(STORAGE_KEY);
+}
