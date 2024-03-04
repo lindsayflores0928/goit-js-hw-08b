@@ -1,21 +1,21 @@
 {
-    "name": "parcel-project-template",
+    "name": "goit-js-hw-08b",
     "version": "2.0.0",
     "description": "",
-    "homepage": "https://kaa1203.github.io/goit-js-hw-08",
+    "homepage": "https://lindsayflores0928/goit-js-hw-08b",
     "scripts": {
       "start": "parcel src/*.html",
-      "build": "parcel build src/*.html --public-url /goit-js-hw-08/"
+      "build": "parcel build src/*.html --public-url /goit-js-hw-08b/"
     },
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/goitacademy/parcel-project-template.git"
+      "url": "git+https://github.com/lindsayflores0928/goit-js-hw-08b"
     },
     "keywords": [],
-    "author": "Kenneth Aguila <kennethaguila1203@gmail.com>",
+    "author": "Lindsay Flores <lindsayflores0928@yahoo.com>",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/goitacademy/parcel-project-template/issues"
+      "url": "https://github.com/lindsayflores0928/goit-js-hw-08b/issues"
     },
     "dependencies": {
       "@vimeo/player": "^2.21.0",
